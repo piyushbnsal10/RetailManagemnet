@@ -1,21 +1,31 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'Maven'
+    }
     stages {
-        stage('Build') {
+
+        stage('Compile') {
             steps {
-                echo 'Building..'
+                // sh 'docker --version'
+                echo 'Executing Compile'
+                mvn compile
             }
         }
-        stage('Test') {
+
+        stage('Tests') {
             steps {
-                echo 'Testing..'
+                mvn test
+                echo 'Executing Second Stage'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+        stage('Install') {
+            steps {   
+                mvn install -DskipTests
             }
         }
+
+        
+       
     }
 }
